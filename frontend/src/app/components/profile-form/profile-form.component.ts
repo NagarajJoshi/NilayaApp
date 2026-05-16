@@ -11,17 +11,15 @@ import { StudentProfile } from '../../models/student-profile.model';
 export class ProfileFormComponent implements OnInit {
   profileForm!: FormGroup;
   currentStep = 1;
+  selectedFile: File | null = null;
+  fileError = '';
   isSubmitting = false;
   successMessage = '';
   errorMessage = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private profileService: ProfileService
-  ) {}
+  constructor(private fb: FormBuilder, private profileService: ProfileService) {}
 
   ngOnInit(): void {
-    // Nested form groups partition data logically per wizard view step
     this.profileForm = this.fb.group({
       personal: this.fb.group({
         firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -34,46 +32,65 @@ export class ProfileFormComponent implements OnInit {
     });
   }
 
-  // Getters to quickly access nested form properties inside template checks
   get personalStep() { return this.profileForm.get('personal') as FormGroup; }
   get academicStep() { return this.profileForm.get('academic') as FormGroup; }
 
-  nextStep(): void {
-    if (this.currentStep === 1 && this.personalStep.valid) {
-      this.currentStep = 2;
-    }
-  }
+  nextStep() { if (this.personalStep.valid) this.currentStep = 2; }
+  prevStep() { this.currentStep = 1; }
 
-  prevStep(): void {
-    if (this.currentStep === 2) {
-      this.currentStep = 1;
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.fileError = '';
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      
+      // Validation Check: File type restriction
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(file.type)) {
+        this.fileError = 'Only PDF or Word documents are allowed.';
+        this.selectedFile = null;
+        return;
+      }
+
+      // Validation Check: 5MB File size ceiling limitation
+      if (file.size > 5 * 1024 * 1024) {
+        this.fileError = 'File size must be smaller than 5MB.';
+        this.selectedFile = null;
+        return;
+      }
+
+      this.selectedFile = file;
     }
   }
 
   onSubmit(): void {
-    if (this.profileForm.invalid) return;
+    if (this.profileForm.invalid || !this.selectedFile) {
+      if (!this.selectedFile) this.fileError = 'Please upload a transcript document.';
+      return;
+    }
 
     this.isSubmitting = true;
     this.successMessage = '';
     this.errorMessage = '';
 
-    // Merge nested wizard groups flat to match backend DTO expects
-    const applicationPayload: StudentProfile = {
+    const payload: StudentProfile = {
       firstName: this.personalStep.value.firstName,
       lastName: this.personalStep.value.lastName,
       gpa: Number(this.academicStep.value.gpa),
       major: this.academicStep.value.major
     };
 
-    this.profileService.submitProfile(applicationPayload).subscribe({
-      next: (response) => {
-        this.successMessage = 'Scholarship profile submitted successfully!';
+    this.profileService.submitProfileWithFile(payload, this.selectedFile).subscribe({
+      next: (res) => {
+        this.successMessage = 'Profile and transcript submitted successfully!';
         this.profileForm.reset();
+        this.selectedFile = null;
         this.currentStep = 1;
         this.isSubmitting = false;
       },
       error: (err) => {
-        this.errorMessage = 'Failed to submit application. Please try again.';
+        this.errorMessage = 'Upload submission failed. Please try again.';
         this.isSubmitting = false;
       }
     });

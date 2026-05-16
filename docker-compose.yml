@@ -25,6 +25,9 @@ services:
       - db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/scholarship_db
+    volumes:
+      # Persists all uploaded files into a safe local "uploads_data" directory on your machine
+      - ./uploads_data:/app/uploads
     networks:
       - app-network
 

@@ -5,3 +5,6 @@ CREATE TABLE IF NOT EXISTS student_profiles (
     gpa NUMERIC(3,2) NOT NULL,
     major VARCHAR(100) NOT NULL
 );
+
+ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS document_path VARCHAR(512);
+

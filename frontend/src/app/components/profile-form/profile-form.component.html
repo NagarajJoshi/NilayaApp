@@ -57,6 +57,14 @@
           Academic major is required.
         </div>
       </div>
+      
+      <div class="form-group">
+        <label for="transcript">Upload Academic Transcript (PDF/Word)</label>
+        <input id="transcript" type="file" (change) = "onFileChange($event)" accept=".pdf,.doc,.docx">
+        <div *ngIf="fileError" class="error">{{ fileError }}</div>
+        <div *ngIf="selectedFile" class="file-success">Selected: {{ selectedFile.name }}</div>
+      </div>
+
 
       <div class="actions">
         <button type="button" (click)="prevStep()" class="btn btn-secondary" [disabled]="isSubmitting">Back</button>

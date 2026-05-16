@@ -20,6 +20,9 @@ public class StudentProfile {
 
     @Column(nullable = false)
     private String major;
+    
+    @Column(name = "document_path")
+    private String documentPath;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -32,4 +35,6 @@ public class StudentProfile {
     public void setGpa(Double gpa) { this.gpa = gpa; }
     public String getMajor() { return major; }
     public void setMajor(String major) { this.major = major; }
+    public String getDocumentPath() { return documentPath; }
+    public void setDocumentPath(String documentPath) { this.documentPath = documentPath; }
 }
