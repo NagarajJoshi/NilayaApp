@@ -1,5 +1,9 @@
 # NilayaApp
 
+# prerequisite
+IDE for code browser: Eclipse/Intellij , Visual Studio Code
+Runtime: Docker and docker-compose
+
 # 1. Access the main project directory
 cd NilayaApp
 
@@ -14,3 +18,7 @@ docker-compose logs -f backend
 
 # 5 Web UI
 http://localhost:4200
+
+# 6 If build and image successfully created already and rerun application without rebuilding
+docker-compose up -d
+
