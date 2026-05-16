@@ -8,3 +8,6 @@ docker-compose up --build -d
 
 # 3. Monitor container boot logs to verify database connectivity
 docker-compose logs -f backend
+
+# 4. Swagger UI
+ http://localhost:8080/swagger-ui/index.html
