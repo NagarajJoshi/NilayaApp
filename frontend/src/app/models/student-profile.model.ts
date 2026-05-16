@@ -5,3 +5,9 @@ export interface StudentProfile {
   gpa: number;
   major: string;
 }
+
+export interface AuthResponse {
+  token: string;
+  role: string;
+  username: string;
+}

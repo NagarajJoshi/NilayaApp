@@ -1,0 +1,28 @@
+<div class="dashboard-container">
+  <h2>Reviewer Application Management Desk</h2>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+  <table class="admin-table" *ngIf="applications.length > 0">
+    <thead>
+      <tr>
+        <th>Applicant Name</th>
+        <th>Calculated GPA</th>
+        <th>Intended Major</th>
+        <th>Verification Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of applications">
+        <td>{{ app.lastName }}, {{ app.firstName }}</td>
+        <td><strong>{{ app.gpa }}</strong></td>
+        <td>{{ app.major }}</td>
+        <td>
+          <button (click)="downloadTranscript(app.id!, app.firstName)" class="btn-download">
+            Download PDF Transcript
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="applications.length === 0 && !errorMessage">No applications found.</p>
+</div>

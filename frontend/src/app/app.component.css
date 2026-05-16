@@ -1,0 +1,25 @@
+.main-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e293b;
+  padding: 15px 30px;
+  color: white;
+  font-family: sans-serif;
+}
+.logo { font-size: 20px; font-weight: bold; }
+.nav-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  padding-bottom: 4px;
+}
+.nav-links a:hover { color: white; }
+.nav-links a.active-link {
+  color: #3b82f6;
+  border-bottom: 2px solid #3b82f6;
+}
+.page-viewport {
+  padding: 20px;
+}

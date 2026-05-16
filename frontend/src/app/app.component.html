@@ -1,0 +1,12 @@
+<nav class="main-navbar">
+  <div class="logo">🎓 Scholarship Portal</div>
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Apply Now</a>
+    <a routerLink="/admin" routerLinkActive="active-link">Admin Review Desk</a>
+  </div>
+</nav>
+
+<!-- Angular injects active components (Form or Admin Table) here dynamically based on path -->
+<div class="page-viewport">
+  <router-outlet></router-outlet>
+</div>
