@@ -11,3 +11,6 @@ docker-compose logs -f backend
 
 # 4. Swagger UI
  http://localhost:8080/swagger-ui/index.html
+
+# 5 Web UI
+http://localhost:4200
