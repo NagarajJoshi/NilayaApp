@@ -15,7 +15,13 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/profiles/**").permitAll() // Permits open API testing for E2E setup
+                // Allow public access to all Swagger and OpenAPI UI resources
+                .requestMatchers(
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+                ).permitAll()
+                .requestMatchers("/api/profiles/**").permitAll()
                 .anyRequest().authenticated()
             );
         return http.build();
