@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./database/init.sql:/docker-entrypoint-initdb.dir/init.sql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
@@ -20,11 +20,21 @@ services:
     build: ./backend
     container_name: scholarship_backend_container
     ports:
-      - "8080:8080"
+      - "8080:8080" # Exposed publicly so your browser can route directly to it
     depends_on:
       - db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/scholarship_db
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: scholarship_frontend_container
+    ports:
+      - "4200:4200" # Serves the Angular user interface layer directly
+    depends_on:
+      - backend
     networks:
       - app-network
 
