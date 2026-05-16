@@ -16,9 +16,9 @@ docker-compose logs -f backend
 # 4. Swagger UI
  http://localhost:8080/swagger-ui/index.html
 
-# 5 Web UI
+# 5. Web UI
 http://localhost:4200
 
-# 6 If build and image successfully created already and rerun application without rebuilding
+# 6. If build and image successfully created already and rerun application without rebuilding
 docker-compose up -d
 
