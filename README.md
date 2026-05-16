@@ -1,7 +1,7 @@
 # NilayaApp
 
 # 1. Access the main project directory
-cd scholarship-app
+cd NilayaApp
 
 # 2. Spin up all containers in detached mode and trigger building images
 docker-compose up --build -d
