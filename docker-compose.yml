@@ -41,6 +41,23 @@ services:
     networks:
       - app-network
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: scholarship_pgadmin_container
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@nilaya.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+    ports:
+      - "5050:80"
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+    networks:
+      - app-network
+    depends_on:
+      - db
+
 volumes:
   postgres_data:
 
